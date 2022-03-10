@@ -1,4 +1,4 @@
-package ir.man.spring.security.service;
+package ir.man.spring.security.model;
 
 import java.io.Serializable;
 

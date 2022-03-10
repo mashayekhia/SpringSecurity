@@ -1,4 +1,4 @@
-package ir.man.spring.security.controller.WelcomeController;
+package ir.man.spring.security.controller;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;

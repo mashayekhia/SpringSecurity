@@ -1,9 +1,8 @@
 package ir.man.spring.security.controller;
 
 import ir.man.spring.security.component.JwtTokenUtil;
-import ir.man.spring.security.configuration.AppAuthenticationProvider;
-import ir.man.spring.security.service.JwtRequest;
-import ir.man.spring.security.service.JwtResponse;
+import ir.man.spring.security.model.JwtRequest;
+import ir.man.spring.security.model.JwtResponse;
 import ir.man.spring.security.service.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
