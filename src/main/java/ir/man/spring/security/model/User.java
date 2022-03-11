@@ -1,13 +1,12 @@
 package ir.man.spring.security.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import ir.man.spring.security.appannotations.AppValidEmail;
 import ir.man.spring.security.appannotations.AppValidPasswordMatches;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -21,6 +20,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "Users")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long uid;
     @NotNull
     @NotEmpty
@@ -33,6 +33,7 @@ public class User {
     private String lastname;
     @NotNull
     @NotEmpty
+    @JsonIgnore
     private String password;
     //private String matchingPassword;
     @NotNull

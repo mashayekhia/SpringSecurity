@@ -63,7 +63,7 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // 2: /login دسترسی به همگان روی
                 // بنابراین تمامی نقش کاربران  مجوز دسترسی به لاگین و در نهایت اعتبارسنجی می شوند
                 .antMatchers("/anonymous*").anonymous() // بدون نیاز به لاگین
-                .antMatchers("/hello").anonymous() // بدون نیاز به لاگین
+                //.antMatchers("/hello").anonymous() // بدون نیاز به لاگین
                 .antMatchers("/login").permitAll()
                 .antMatchers("/auth").permitAll()
                 // 3: all other requests need to be authenticated

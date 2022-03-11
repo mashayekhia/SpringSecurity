@@ -35,7 +35,7 @@ public class JwtAuthenticationController {
         System.out.println("Username: " + userDetails.getUsername());
         try {
             Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword()));
-            System.out.println("->"+authenticate);
+            System.out.println("->"+authenticate.getDetails());
         } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {

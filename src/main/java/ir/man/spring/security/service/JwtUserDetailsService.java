@@ -14,8 +14,9 @@ import java.util.Optional;
 //Load Username and Password from database
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
+
     @Autowired
-    private UserService userService;   
+    private UserService userService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -27,5 +28,9 @@ public class JwtUserDetailsService implements UserDetailsService {
         if (user == null)
             throw new UsernameNotFoundException("User not found with username: " + username);
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), new ArrayList<>());
+    }
+
+    public User save(User user) {
+        return userService.save(user);
     }
 }
