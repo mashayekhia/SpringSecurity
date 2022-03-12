@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 // --- default Security Configuration
 // برنامه به صورت پیش فرض از این کلاس برای راه اندازی امنیت استفاده می کند
@@ -19,5 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class AppInitializer {
     public static void main(String[] args) {
         final ConfigurableApplicationContext context = SpringApplication.run(AppInitializer.class, args);
+//        PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
+//        System.out.println(passwordEncoder.encode("123"));
     }
 }

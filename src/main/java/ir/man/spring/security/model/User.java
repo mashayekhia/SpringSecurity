@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -22,24 +22,23 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long uid;
-    @NotNull
-    @NotEmpty
     private String username;
-    @NotNull
-    @NotEmpty
     private String firstname;
-    @NotNull
-    @NotEmpty
     private String lastname;
-    @NotNull
-    @NotEmpty
     @JsonIgnore
     private String password;
-    //private String matchingPassword;
-    @NotNull
-    @NotEmpty
-    @AppValidEmail
     private String email;
+    private Boolean enable;
+
+//    private List<Role> roles;
+//
+//    @OneToMany(mappedBy = "user")
+//    public List<Role> getRoles(){
+//        return roles;
+//    }
+//    public void setRoles(List<Role> roles) {
+//        this.roles = roles;
+//    }
 
     @Override
     public String toString() {

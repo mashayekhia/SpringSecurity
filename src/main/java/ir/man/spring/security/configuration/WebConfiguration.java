@@ -14,7 +14,7 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableWebMvc
 @Profile("http")
-@ComponentScan(basePackages = {"com.example.security.controller.group1"})
+//@ComponentScan(basePackages = {"ir.man.spring.security.controller"})
 public class WebConfiguration implements WebMvcConfigurer {
 
     @Override

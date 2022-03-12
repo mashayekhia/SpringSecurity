@@ -25,5 +25,6 @@
         </tr>
     </table>
 </form>
+<a href="/user/register" >New Login</a>
 </body>
 </html>
