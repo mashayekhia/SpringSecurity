@@ -1,16 +1,19 @@
 package ir.man.spring.security.controller;
 
+import ir.man.spring.security.event.OnRegistrationCompleteEvent;
+import ir.man.spring.security.exception.UserAlreadyExistException;
 import ir.man.spring.security.model.User;
 import ir.man.spring.security.model.UserDto;
 import ir.man.spring.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -24,30 +27,40 @@ public class UserController {
     private ApplicationEventPublisher eventPublisher;
 
     @GetMapping("/registration")
-    public ModelAndView registrationForm() {
+    public String registrationForm(Model model) {
         //TODO one time token for a submit form
         System.out.println("registrationForm");
-        ModelAndView modelAndView = new ModelAndView("registration");
-        modelAndView.addObject("user", new UserDto());
-        return modelAndView;
+        model.addAttribute("user", new UserDto());
+        return "user/registration";
     }
 
     @PostMapping("/registration")
-    public ModelAndView registrationUserAccount(/*@ModelAttribute("user")*/ @RequestBody @Valid UserDto user, Errors error) {
-
+    public ModelAndView registrationUserAccount(@ModelAttribute("user") @Valid UserDto userDao,
+            HttpServletRequest request,
+             Errors error) {
+        System.out.println("registrationUserAccount");
 //        try {
-//            UserDto registered =
-//        }
-        if (error.hasErrors()) {
-            for (ObjectError errorList : error.getFieldErrors()) {
-                System.out.println(errorList + " " + errorList.getDefaultMessage() + "\n");
-            }
-            return new ModelAndView("registration");
-        } else {
-            userService.save(user);
-        }
+            User registeredUser = userService.registerNewUser(userDao);
 
-        return new ModelAndView("successRegister", "user", user);
+            String appUrl = request.getContextPath();
+            eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registeredUser, request.getLocale(), appUrl));
+        System.out.println("ssssssssssssssssssssss");
+//        } catch (UserAlreadyExistException ex) {
+//            ModelAndView registrationMV = new ModelAndView("user/registration", "user", userDao);
+//            registrationMV.addObject("message", "An account for that username/email already exists.");
+//            return registrationMV;
+//        } catch (RuntimeException ex) {
+//            return new ModelAndView("emailError", "user", userDao);
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+
+        return new ModelAndView("successRegister", "user", userDao);
+    }
+
+    @GetMapping("/registrationConfirm")
+    public void registrationConfirm(@RequestParam String token) {
+        System.out.println("registrationConfirm with token: " + token);
     }
 
 //    @GetMapping("/login")

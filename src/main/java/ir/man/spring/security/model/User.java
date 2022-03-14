@@ -12,10 +12,8 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@AppValidPasswordMatches
 @Entity
 @Table(name = "Users")
 public class User {
@@ -29,16 +27,12 @@ public class User {
     private String password;
     private String email;
     private Boolean enable;
+    @OneToMany(mappedBy = "user")
+    private List<Role> roles;
 
-//    private List<Role> roles;
-//
-//    @OneToMany(mappedBy = "user")
-//    public List<Role> getRoles(){
-//        return roles;
-//    }
-//    public void setRoles(List<Role> roles) {
-//        this.roles = roles;
-//    }
+    public User() {
+        enable = false;
+    }
 
     @Override
     public String toString() {

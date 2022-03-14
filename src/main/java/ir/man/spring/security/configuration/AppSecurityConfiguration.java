@@ -26,7 +26,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 // By adding @EnableWebSecurity, we get Spring Security and MVC integration support
 // The @EnableWebSecurity annotation is crucial if we disable the default security configuration (SecurityAutoConfiguration)
 @EnableWebSecurity
-@Profile("http")
+@Profile("home")
 public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     //@Autowired

@@ -7,13 +7,14 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 @Configuration
 @EnableWebMvc
-@Profile("http")
+@Profile("home")
 //@ComponentScan(basePackages = {"ir.man.spring.security.controller"})
 public class WebConfiguration implements WebMvcConfigurer {
 
@@ -32,9 +33,15 @@ public class WebConfiguration implements WebMvcConfigurer {
     public ViewResolver userViewResolver() {
         System.out.println("-4--WebConfiguration-G1->viewResolver()--");
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setViewClass(JstlView.class);
+       // viewResolver.setViewClass(JstlView.class);
         viewResolver.setPrefix("/WEB-INF/view/");
         viewResolver.setSuffix(".jsp");
         return viewResolver;
+    }
+
+    @Override
+    public void configureViewResolvers(ViewResolverRegistry registry) {
+        System.out.println("99999999999999999999999999999999");
+        registry.jsp("/WEB-INF/view/",".jsp");
     }
 }

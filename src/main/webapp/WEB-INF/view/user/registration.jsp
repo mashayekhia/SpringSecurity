@@ -1,11 +1,11 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>JSP - Hello World</title>
 </head>
 <body>
-<form method="post" action="registration">
+<form method="post" action="registration" enctype="application/x-www-form-urlencoded">
     <div>
         <label for="firstname">Firstname</label>
         <input id="firstname" name="firstname" type="text" value="">
@@ -13,6 +13,10 @@
     <div>
         <label for="lastname">Lastname</label>
         <input id="lastname" name="lastname" type="text">
+    </div>
+    <div>
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text">
     </div>
     <div>
         <label for="email">Email</label>

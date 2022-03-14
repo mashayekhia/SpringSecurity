@@ -49,6 +49,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             System.out.println("-5.2--JwtRequestFilter->if username != null");
             UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(username);
             if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+                System.out.println("token is valid");
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -57,6 +58,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         }
 
+        System.out.println("GOOOOOOOOOOOOOOOOOOOO");
         filterChain.doFilter(request, response);
     }
 }

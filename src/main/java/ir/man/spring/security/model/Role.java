@@ -21,16 +21,8 @@ public class Role {
     @Column(name = "rolename")
     private String roleName;
 
-//    private User user;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "uid")
-//    public User getUser() {
-//        return user;
-//    }
-//
-//    public void setUser(User user) {
-//        this.user = user;
-//    }
+    @ManyToOne
+    @JoinColumn(name = "uid" , nullable = false)
+    private User user;
 
 }

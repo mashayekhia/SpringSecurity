@@ -2,6 +2,7 @@ package ir.man.spring.security.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import ir.man.spring.security.appannotations.AppValidEmail;
+import ir.man.spring.security.appannotations.AppValidPasswordMatches;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +17,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@AppValidPasswordMatches
 public class UserDto {
     @NotNull
     @NotEmpty
