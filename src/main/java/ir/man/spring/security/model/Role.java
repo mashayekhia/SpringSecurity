@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Builder
@@ -17,12 +18,21 @@ import javax.persistence.*;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long rid;
-    @Column(name = "rolename")
-    private String roleName;
+    private Long role_id;
+    private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "uid" , nullable = false)
-    private User user;
+    @ManyToMany(mappedBy = "roles")
+    private List<User> users;
+
+    @ManyToMany
+    @JoinTable(name = "roles_privileges"
+            , joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id")
+            , inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "privilege_id"))
+    public List<Privilege> privileges;
+
+    public Role(String name) {
+        this.name = name;
+    }
+
 
 }

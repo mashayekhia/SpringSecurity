@@ -3,7 +3,7 @@ package ir.man.spring.security.controller;
 import ir.man.spring.security.component.JwtTokenUtil;
 import ir.man.spring.security.model.JwtRequest;
 import ir.man.spring.security.model.JwtResponse;
-import ir.man.spring.security.service.JwtUserDetailsService;
+import ir.man.spring.security.service.AppUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,13 +25,13 @@ public class JwtAuthenticationController {
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    private JwtUserDetailsService jwtUserDetailsService;
+    private AppUserDetailsService appUserDetailsService;
 
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
     public ResponseEntity<?> generateAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
         System.out.println("-6--generateAuthenticationToken(@RequestBody JwtRequest authenticationRequest)");
         //From Database
-        UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        UserDetails userDetails = appUserDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         System.out.println("Username: " + userDetails.getUsername());
         try {
             Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword()));

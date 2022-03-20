@@ -11,37 +11,33 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+// *** 1 *** -> *** 2:UserRepository ***
 @Data
-@AllArgsConstructor
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "Users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long uid;
-    private String username;
+    private long user_id;
     private String firstname;
     private String lastname;
-    @JsonIgnore
     private String password;
     private String email;
-    private Boolean enable;
-    @OneToMany(mappedBy = "user")
+    @Column(name = "enable")
+    private Boolean isEnable;
+    @Column(name = "account_non_expired")
+    private Boolean accountIsExpired;
+    @Column(name = "credentials_non_expired")
+    private Boolean credentialsIsExpired;
+    @Column(name = "account_non_locked")
+    private Boolean isLocked;
+
+    @ManyToMany
+    @JoinTable(name = "users_roles"
+            , joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
     private List<Role> roles;
-
-    public User() {
-        enable = false;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + uid +
-                ", username='" + username + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
 }

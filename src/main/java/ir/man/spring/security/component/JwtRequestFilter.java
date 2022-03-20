@@ -1,6 +1,6 @@
 package ir.man.spring.security.component;
 
-import ir.man.spring.security.service.JwtUserDetailsService;
+import ir.man.spring.security.service.AppUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +20,7 @@ import java.io.IOException;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     @Autowired
-    private JwtUserDetailsService jwtUserDetailsService;
+    private AppUserDetailsService appUserDetailsService;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
@@ -47,7 +47,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             System.out.println("-5.2--JwtRequestFilter->if username != null");
-            UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(username);
+            UserDetails userDetails = appUserDetailsService.loadUserByUsername(username);
             if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
                 System.out.println("token is valid");
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =

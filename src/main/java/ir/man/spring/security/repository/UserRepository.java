@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+// *** 2 *** -> *** 3:UserDao ***
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-     User findUserByUsername(String username);
-     boolean findUserByEmail(String email);
+     User findUserByEmail(String email);
 }

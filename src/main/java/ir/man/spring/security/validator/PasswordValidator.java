@@ -1,21 +1,19 @@
 package ir.man.spring.security.validator;
 
-import ir.man.spring.security.model.User;
-import ir.man.spring.security.appannotations.AppValidPasswordMatches;
-import ir.man.spring.security.model.UserDto;
+import ir.man.spring.security.appannotations.AppValidPassword;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class PasswordValidator implements ConstraintValidator<AppValidPasswordMatches, Object> {
+public class PasswordValidator implements ConstraintValidator<AppValidPassword,String> {
     @Override
-    public void initialize(AppValidPasswordMatches constraintAnnotation) {
-        ConstraintValidator.super.initialize(constraintAnnotation);
+    public void initialize(AppValidPassword constraintAnnotation) {
+
     }
 
     @Override
-    public boolean isValid(Object obj, ConstraintValidatorContext constraintValidatorContext) {
-        UserDto user = (UserDto) obj;
-        return user.getPassword().equals(user.getMatchingPassword());
+    public boolean isValid(String password, ConstraintValidatorContext constraintValidatorContext) {
+
+        return false;
     }
 }

@@ -28,8 +28,8 @@ public class AppInitializer {
 
     public static void main(String[] args) throws MessagingException {
         final ConfigurableApplicationContext context = SpringApplication.run(AppInitializer.class, args);
-//        PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
-//        System.out.println(passwordEncoder.encode("123"));
+        PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
+        System.out.println(passwordEncoder.encode("123"));
 
 
     }

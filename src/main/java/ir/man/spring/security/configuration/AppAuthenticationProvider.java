@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
+// *** 7 *** -> *** 8:WebSecurityConfiguration ***
 @Component
 public class AppAuthenticationProvider implements AuthenticationProvider {
     @Override

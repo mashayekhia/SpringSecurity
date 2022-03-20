@@ -7,11 +7,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+// *** 3 *** -> *** 4:IUserService ***
 @Component
 @Data
 @AllArgsConstructor
@@ -32,18 +34,10 @@ public class UserDto {
     @NotEmpty
     @JsonIgnore
     private String password;
-    private String matchingPassword;
+    private String confirmPassword;
     @NotNull
     @NotEmpty
     @AppValidEmail
     private String email;
-
-//    public boolean allFieldSets() {
-//        if(blankOrNullField(username) && blankOrNullField(firstname) && blankOrNullField(lastname)
-//                && blankOrNullField(password) && )
-//    }
-//    public boolean blankOrNullField(String field) {
-//        return !"".equals(field) && field != null;
-//    }
-
+    private Boolean enable;
 }

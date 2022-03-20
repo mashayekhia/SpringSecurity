@@ -9,6 +9,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
+import java.util.Locale;
 import java.util.UUID;
 
 @Component
@@ -26,11 +27,12 @@ public class RegistrationListener {
         System.out.println("send email " + event.toString());
         User user = event.getUser();
         String token = UUID.randomUUID().toString();
+
         userService.assignVerificationToken(user, token);
 
         String confirmationUrl = event.getAppUrl() + "/user/registrationConfirm.html?token=" + token;
-        //String message = messageSource.getMessage("message.regSucc", null, event.getLocale());
-        emailService.sendSimpleMessage(user.getEmail(), "Registration Confirm", "\r\n" + "http://localhost:8081" + confirmationUrl);
+        String message = messageSource.getMessage("message.regSuccess", null, event.getLocale());
+        emailService.sendSimpleMessage(user.getEmail(), "Registration Confirm", message + "\r\n" + confirmationUrl);
     }
 
 }

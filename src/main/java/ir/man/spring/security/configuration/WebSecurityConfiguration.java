@@ -1,12 +1,11 @@
 package ir.man.spring.security.configuration;
 
 import ir.man.spring.security.component.JwtRequestFilter;
-import ir.man.spring.security.configuration.entry_point.WebBasicAuthenticationEntryPoint;
 import ir.man.spring.security.configuration.entry_point.WebJwtAuthenticationEntryPoint;
 import ir.man.spring.security.handler.AppAccessDeniedHandler;
 import ir.man.spring.security.handler.AppAuthenticationFailureHandler;
 import ir.man.spring.security.handler.AppLogoutSuccessHandler;
-import ir.man.spring.security.service.JwtUserDetailsService;
+import ir.man.spring.security.service.AppUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +18,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -27,7 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 // The @EnableWebSecurity annotation is crucial if we disable the default security configuration (SecurityAutoConfiguration)
 @EnableWebSecurity
 @Profile("home")
-public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     //@Autowired
     //private WebBasicAuthenticationEntryPoint authenticationEntryPoint;
@@ -36,9 +34,11 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private WebJwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     @Autowired
-    private JwtUserDetailsService jwtUserDetailsService;
+    private AppUserDetailsService appUserDetailsService;
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -49,7 +49,8 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //                .withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN").and()
 //                .withUser("useradmin").password(passwordEncoder().encode("useradmin")).roles("USER", "ADMIN");
         auth.authenticationProvider(appAuthenticationProvider);
-        auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
+        // بهش می گوییم هنگام مقایسه جهت یافتن از بانک ابتدا از این طریق پسورد را مطابق با پسورد بانک انکود کن
+        auth.userDetailsService(appUserDetailsService).passwordEncoder(passwordEncoder);
     }
 
     // Configuration to Authorize Requests
@@ -63,8 +64,7 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // 2: /login دسترسی به همگان روی
                 // بنابراین تمامی نقش کاربران  مجوز دسترسی به لاگین و در نهایت اعتبارسنجی می شوند
                 .antMatchers("/anonymous*").anonymous() // بدون نیاز به لاگین
-                .antMatchers("/login").permitAll()
-                .antMatchers("/auth").permitAll()
+                .antMatchers("/auth","/login*").permitAll()
                 // 3: all other requests need to be authenticated
                 .anyRequest().authenticated() // بقیه نیاز به لاگین
                 // 4:
@@ -93,11 +93,6 @@ public class AppSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         httpSecurity.addFilterAfter(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
     @Bean
